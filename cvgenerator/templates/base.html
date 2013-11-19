@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load url from future %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CONCETO CV GENERATOR</title>
+    <meta name="description" content="CV generator">
+    <meta name="author" content="Florian Wallburg">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen" />
+	<link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="page-header">
+  			<img src="{% static 'img/conceto_logo.jpg' %}"/>
+		</div>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">cvgenerator</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="{% url 'generator:index' %}">Generator</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li><a href="{% url 'employee:index' %}">Employees</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'admin:index' %}">Admin</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+	    {% block content %}Empty page{% endblock %}
+
+	    <p><hr></p>
+
+	    <footer class="row">
+	        <div class="col-md-6">
+	            <p>This is cvgen</p>
+	        </div>
+	        <div class="col-md-6" style="text-align:right;">
+	                &copy; <a href="#">Florian Wallburg</a> 2013 | <a href="#">license</a>
+	        </div>
+	    </footer>
+
+	</div> <!-- container -->
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

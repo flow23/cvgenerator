@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="{% url 'employee:index' %}">Employees</a></li>
+  <li class="active">{{ employee }}</li>
+</ol>
+
+<h1>{{ employee }}</h1>
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Personal information
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        First name: {{ employee.first_name }}<br/>
+        Last name: {{ employee.last_name }}<br/>
+        Position: {{ employee.get_position_display }}<br/>
+        Place of birth: {{ employee.place_of_birth }}<br/>
+        Year of birth: {{ employee.year_of_birth }}<br/>
+        Citizenship: {{ employee.citizenship }}<br/>
+        Familiy status: {{ employee.familiy_status }}<br/>
+        Short description:<br/>
+        <textarea class="form-control" rows="4">{{ employee.short_description }}</textarea>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Skills
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+        <h2>SAP modules</h2>
+        {% for skill in employee.skill_set.all %}
+    		<li class="list-group-item">{{ skill.sap_module }}</li>
+		{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

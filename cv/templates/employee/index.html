@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li class="active">Employees</li>
+</ol>
+
+{% if employee_list %}
+<table class="table table-striped">
+   	<thead>
+   		<tr>
+   			<th>#</th>
+   			<th>First name</th>
+   			<th>Last name</th>
+   			<th>Position</th>
+   			<th>Detail</th>
+   			<th>Edit</th>
+   			<th>Action</th>
+   		</tr>
+   	<tbody>
+   		{% for employee in employee_list %}
+   		<tr>
+   			<td>{{ employee.id }}</td>
+   			<td>{{ employee.first_name }}</td>
+   			<td>{{ employee.last_name }}</td>
+   			<td>{{ employee.get_position_display }}</td>
+   			<td><a href="{% url 'employee:detail' employee.id %}"><span class="glyphicon glyphicon-search"></span></a></td>
+   			<td><a href="{% url 'employee:update' employee.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+   			<td><a href="{% url 'generator:create' employee.id %}"><span class="glyphicon glyphicon-cog"></span></a></td>
+   		</tr>
+   		{% endfor %}
+   	</tbody>
+</table>
+{% else %}
+<div class="alert alert-danger">No employees are available.</div>
+{% endif %}
+
+{% endblock %}

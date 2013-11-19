@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Generator</li>
+</ol>
+
+{% if generator_list %}
+<table class="table table-striped">
+   	<thead>
+   		<tr>
+   			<th>#</th>
+   			<th>Employee</th>
+   			<th>Template</th>
+   			<th>Date</th>
+   			<th>Status</th>
+   			<th>Media</th>
+   		</tr>
+   	<tbody>
+        {% for generator in generator_list %}
+   		<tr>
+   			<td>{{ generator.id }}</td>
+   			<td>{{ generator.employee }}</td>
+   			<td>{{ generator.template }}</td>
+   			<td>{{ generator.creation_date }}</td>
+   			{% if generator.status %}
+   			<td>
+   			{% if generator.status == 'Q' %}
+   			<button type="button" class="btn btn-warning btn-xs">Queued</button>
+   			{% elif generator.status == 'F' %}
+   			<button type="button" class="btn btn-success btn-xs">Created</button>
+   			{% endif %}
+   			{% endif %}
+   			</td>
+        {% if generator.cv_file %}
+   			<td><a href="{{ generator.cv_file.url }}"><span class="glyphicon glyphicon-download"></span></a></td>
+        {% else %}
+        <td><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+        {% endif %}
+   		</tr>
+        {% endfor %}
+   	</tbody>
+</table>
+{% else %}
+<div class="alert alert-danger">No CVs were generated.</div>
+{% endif %}
+
+{% endblock %}
