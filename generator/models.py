@@ -66,11 +66,8 @@ class Generator(models.Model):
     def get_absolute_url(self):
         return reverse('generator:detail', kwargs={'pk': self.pk})
 
-    def generate_filename(self, id, employee, template):
-        return str(id) + '_' + employee.first_name + '_' + employee.last_name + '_' + template.name + '.docx'
-
-
-
+    def generate_filename(self, id, employee, template, filetype):
+        return str(id) + '_' + employee.first_name + '_' + employee.last_name + '_' + template.name + '.' + filetype
 
 class Template_Setting(models.Model):
     # Fields

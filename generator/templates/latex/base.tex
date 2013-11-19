@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+ 
+% German and english support
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+ 
+% PDF search & cut'n'paste
+\usepackage{cmap}
+ 
+% Used during development
+\usepackage{blindtext}
+
+% Page options
+\usepackage{geometry}
+\geometry{left=0.4cm}
+\geometry{right=0.4cm}
+\geometry{top=0.4cm}
+\geometry{bottom=0.4cm}
+ 
+% Misc options
+\usepackage[parfill]{parskip}
+ 
+\nonstopmode
+ 
+{% block extraheader %}{% endblock %}
+ 
+\title{% templatetag openbrace %}{% block title %}{% endblock %}}
+\author{% templatetag openbrace %}{% block author %}{% endblock %}}
+\date{% templatetag openbrace %}{% block date %}{% endblock %}}
+ 
+\begin{document}
+{% block document %}{% endblock %}
+\blinddocument
+\end{document}
