@@ -44,7 +44,13 @@ class Generator(models.Model):
         choices=STATUS_AUSWAHL,
         default=QUEUED)
     creation_date = models.DateTimeField(auto_now_add = True)
-    cv_file = models.FileField(
+    pdf_file = models.FileField(
+        upload_to = settings.MEDIA_ROOT,
+        blank = True,
+        null = True,
+        help_text = "Sample help text.",
+    )
+    tex_file = models.FileField(
         upload_to = settings.MEDIA_ROOT,
         blank = True,
         null = True,

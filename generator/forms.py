@@ -6,32 +6,26 @@ import latex
 class GeneratorForm(forms.ModelForm):
     class Meta:
         model = Generator
-        exclude = ('status','cv_file',)
-
-    '''
-    def generate_cv(self, filename=None):
-        Hokuspokus().save(filename)
-        pass
-    '''
+        exclude = ('status','pdf_file','tex_file')
 
     def save(self, commit=True, force_insert=False, force_update=False, *args, **kwargs):
-        m = super(GeneratorForm, self).save(commit=False, *args, **kwargs)
+        g = super(GeneratorForm, self).save(commit=False, *args, **kwargs)
 
         if commit:
-            m.save()
+            g.save()
 
         # Overriding empty filename from form before saving to db
-        m.cv_file = m.generate_filename(m.id, m.employee, m.template, 'pdf')
+        g.pdf_file = g.generate_filename(g.id, g.employee, g.template, 'pdf')
+        g.tex_file = g.generate_filename(g.id, g.employee, g.template, 'tex')
 
         if commit:
-            m.save()
+            g.save()
 
-        #Hokuspokus().save(m.cv_file)
-        latex.process_latex('latex/base.tex', context=m, outtype='pdf', outfile=str(m.cv_file))
+        latex.process_latex('latex/document_xelatex.tex', context={"g" : g}, outtype='pdf', outfile_pdf=str(g.pdf_file), outfile_tex=str(g.tex_file))
 
-        m.status = 'F'
+        g.status = 'F'
 
         if commit:
-            m.save()
+            g.save()
 
-        return m
+        return g

@@ -16,7 +16,8 @@
    			<th>Template</th>
    			<th>Date</th>
    			<th>Status</th>
-   			<th>Media</th>
+        <th>Tex</th>
+   			<th>PDF</th>
    		</tr>
    	<tbody>
         {% for generator in generator_list %}
@@ -34,8 +35,13 @@
    			{% endif %}
    			{% endif %}
    			</td>
-        {% if generator.cv_file %}
-   			<td><a href="{{ generator.cv_file.url }}"><span class="glyphicon glyphicon-download"></span></a></td>
+        {% if generator.tex_file %}
+        <td><a href="{{ generator.tex_file.url }}"><span class="glyphicon glyphicon-download"></span></a></td>
+        {% else %}
+        <td><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+        {% endif %}
+        {% if generator.pdf_file %}
+   			<td><a href="{{ generator.pdf_file.url }}"><span class="glyphicon glyphicon-download"></span></a></td>
         {% else %}
         <td><span class="glyphicon glyphicon-ban-circle"></span></a></td>
         {% endif %}
@@ -44,7 +50,7 @@
    	</tbody>
 </table>
 {% else %}
-<div class="alert alert-danger">No CVs were generated.</div>
+<div class="alert alert-danger">Yet, no CVs were generated.</div>
 {% endif %}
 
 {% endblock %}
