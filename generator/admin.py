@@ -7,7 +7,7 @@ class TemplateSettingInline(admin.StackedInline):
 
 class TemplateAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('Template', {'fields': ['name', 'description']}),
+		('Template', {'fields': ['name', 'description', 'tex_file']}),
 	]
 	inlines = [TemplateSettingInline]
 	list_display = ('name', 'description', 'count_settings', 'last_change', 'creation_date')
