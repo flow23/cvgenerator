@@ -1,7 +1,6 @@
 import os
 
 from django.db import models
-from django.db.models import Max
 from django.core.urlresolvers import reverse
 from django.conf import settings
 

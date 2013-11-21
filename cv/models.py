@@ -120,8 +120,7 @@ class Project(models.Model):
     project_duration_in_months.short_description = 'Project duration in months'
 
 class Training(models.Model):
-    trainings = models.CharField(max_length=5000)
-    advanced_trainings = models.CharField(max_length=5000)
+    description = models.CharField(max_length=5000)
 
     # Foreign key
     employee = models.ForeignKey(Employee, blank=True, null=True)

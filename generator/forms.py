@@ -1,5 +1,6 @@
 from django import forms
 from generator.models import Generator
+from cv import services
 
 import latex
 
@@ -21,7 +22,19 @@ class GeneratorForm(forms.ModelForm):
         if commit:
             g.save()
 
-        latex.process_latex('latex/document_xelatex.tex', context={"g" : g}, outtype='pdf', outfile_pdf=str(g.pdf_file), outfile_tex=str(g.tex_file))
+        skill_list = services.get_skills_by_employee_id(g.employee.id)
+        project_list = services.get_projects_by_employee_id(g.employee.id)
+        education_list = services.get_educations_by_employee_id(g.employee.id)
+        training_list = services.get_trainings_by_employee_id(g.employee.id)
+        spoken_languages_list = services.get_spoken_languages_by_employee_id(g.employee.id)
+
+        latex_context={'g' : g,
+        'skill_list' : skill_list,
+        'project_list' : project_list,
+        'education_list' : education_list,
+        'training_list' : training_list,
+        'spoken_languages_list' : spoken_languages_list}
+        latex.process_latex(g.template.tex_file, context=latex_context, outtype='pdf', outfile_pdf=str(g.pdf_file), outfile_tex=str(g.tex_file))
 
         g.status = 'F'
 
