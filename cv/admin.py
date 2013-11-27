@@ -37,8 +37,17 @@ class SkillInline(admin.StackedInline):
 	model = Skill
 	extra = 0
 
-class ProjectInline(admin.StackedInline):
+class ProjectInline(admin.TabularInline):
 	model = Project
+	extra = 0
+
+class TaskInline(admin.StackedInline):
+	model = Task
+	extra = 0
+
+class CustomerInline(admin.StackedInline):
+	model = Customer
+	max_num = 1
 	extra = 0
 
 class TrainingInline(admin.StackedInline):
@@ -55,9 +64,9 @@ class SpokenLanguageInline(admin.StackedInline):
 
 class EmployeeAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('Mitarbeiter', {'fields': [('first_name', 'last_name'), 'position']}),
-		('Beschreibung', {'fields': ['short_description'], 'classes': ['']}),
-		('Zusatzinformationen', {'fields': ['place_of_birth', 'year_of_birth', 'family_status', 'citizenship'], 'classes': ['collapse']}),
+		('Employee', {'fields': (['title'], ['first_name', 'last_name'], ['position'])}),
+		('Description', {'fields': ['short_description'], 'classes': ['']}),
+		('Additional information', {'fields': ['place_of_birth', 'country_of_birth', 'year_of_birth', 'family_status', 'citizenship'], 'classes': ['collapse']}),
 	]
 	inlines = [SkillInline, ProjectInline, TrainingInline, EducationInline, SpokenLanguageInline]
 	list_display = ('first_name', 'last_name', 'position', 'count_skills', 'count_projects', 'last_change', 'creation_date')
@@ -68,7 +77,20 @@ admin.site.register(Employee, EmployeeAdmin)
 
 class CustomerAdmin(admin.ModelAdmin):
 	fieldsets = [
-		(None, {'fields': ['name']}),
+		(None, {'fields': (['name', 'anonymous'], 'industry', ['city', 'country'])}),
 	]
+	inlines = [ProjectInline]
+	list_display = ('name', 'anonymous', 'industry', 'city', 'country', 'count_projects')
 
 admin.site.register(Customer, CustomerAdmin)
+
+class ProjectAdmin(admin.ModelAdmin):
+	fieldsets = [
+		('Project', {'fields': ('name', 'description', ['city', 'country_iso_code'], 'position')}),
+		('Period', {'fields': (['project_start', 'project_end'], ['work_start', 'work_end'])}),
+	]
+	inlines = [TaskInline]
+	list_display = ('name', 'count_tasks', 'customer', 'employee')
+	search_fields = ['name', 'customer', 'employee']
+
+admin.site.register(Project, ProjectAdmin)

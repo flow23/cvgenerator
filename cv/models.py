@@ -9,16 +9,24 @@ class Customer(models.Model):
     industry = models.CharField(max_length=100)
     anonymous = models.CharField(max_length=100)
 
+    # Functions
+    def count_projects(self):
+        return self.project_set.count()
+    count_projects.admin_order_field = 'count_projects'
+    count_projects.short_description = '# of projects'
+
     # Self
     def __unicode__(self):
         return "%s" % (self.name)
 
 class Employee(models.Model):
     # Fields
+    title = models.CharField(max_length=50, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=100)
     place_of_birth = models.CharField(max_length=50)
     year_of_birth = models.IntegerField()
+    country_of_birth = CountryField()
 
     LEDIG = 'L'
     VERHEIRATET = 'V'
@@ -89,6 +97,18 @@ class Skill(models.Model):
         choices=KIND_OF_SKILL_AUSWAHL,
         default=APPLICATION_SERVER)
 
+    BASIC = 'B'
+    ADVANCED = 'A'
+    EXPRERT = 'E'
+    LEVEL_AUSWAHL = (
+        (BASIC, 'Grundkenntnisse'),
+        (ADVANCED, 'Forgeschrittenes Wissen'),
+        (EXPRERT, 'Expertenwissen'),
+    )
+    level = models.CharField(max_length=1,
+        choices=LEVEL_AUSWAHL,
+        default=BASIC)
+    
     skill = models.CharField(max_length=200)
 
     # Foreign key
@@ -103,9 +123,7 @@ class Project(models.Model):
     work_end = models.DateField()
     project_start = models.DateField()
     project_end = models.DateField()
-    # Kann berechnet werden
-    #projektdauer_in_monaten = models.IntegerField()
-    activities = models.CharField(max_length=5000)
+    description = models.CharField(max_length=1000, blank=True, null=True)
 
     # Foreign key
     customer = models.ForeignKey(Customer, blank=True, null=True)
@@ -118,6 +136,17 @@ class Project(models.Model):
         return self.project_end.month-self.project_start.month
     project_duration_in_months.admin_order_field = 'project_duration_in_months'
     project_duration_in_months.short_description = 'Project duration in months'
+
+    def count_tasks(self):
+        return self.task_set.count()
+    count_tasks.admin_order_field = 'count_tasks'
+    count_tasks.short_description = '# of tasks'
+
+class Task(models.Model):
+    description = models.CharField(max_length=600)
+
+    # Foreign key
+    project = models.ForeignKey(Project)
 
 class Training(models.Model):
     description = models.CharField(max_length=5000)
