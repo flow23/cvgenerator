@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'icybackup',
     'cv',
     'generator',
 )
@@ -111,26 +110,5 @@ MEDIA_ROOT = (
 
 MEDIA_URL = '/media/'
 
-# debug
-if DEBUG:
-    # geordi
-    MIDDLEWARE_CLASSES += (
-        'geordi.VisorMiddleware',
-    )
-
-    INSTALLED_APPS += (
-        'geordi',
-    )
-
-    # debug_toolbar
-    MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        )
-
-    INTERNAL_IPS = ('127.0.0.1',)
-
-    INSTALLED_APPS += (
-        'debug_toolbar',
-    )
-
-
+# Import local settings
+from local_settings import *
