@@ -28,6 +28,7 @@ class GeneratorForm(forms.ModelForm):
         training_list = services.get_trainings_by_employee_id(g.employee.id)
         spoken_languages_list = services.get_spoken_languages_by_employee_id(g.employee.id)
 
+        # Setting context for latex engine
         latex_context={'g' : g,
         'skill_list' : skill_list,
         'project_list' : project_list,

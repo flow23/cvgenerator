@@ -24,7 +24,7 @@ class GeneratorCreateView(generic.CreateView):
         form.instance.created_by = self.request.user
         return super(GeneratorCreateView, self).form_valid(form)
 
-    @method_decorator(login_required)
+    #@method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(GeneratorCreateView, self).dispatch(*args, **kwargs)
 
