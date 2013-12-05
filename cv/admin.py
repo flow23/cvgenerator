@@ -35,10 +35,12 @@ admin.site.register(Movie, MovieAdmin)
 
 class SkillInline(admin.StackedInline):
 	model = Skill
+	ordering = ('kind_of_skill', 'skill', 'level')
 	extra = 0
 
 class ProjectInline(admin.TabularInline):
 	model = Project
+	exclude = ('project_start','project_end')
 	extra = 0
 
 class TaskInline(admin.StackedInline):

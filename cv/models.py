@@ -5,7 +5,7 @@ class Customer(models.Model):
     # Fields
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    country = CountryField()
+    country = CountryField(default='DE')
     industry = models.CharField(max_length=100)
     anonymous = models.CharField(max_length=100)
 
@@ -26,7 +26,7 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=100)
     place_of_birth = models.CharField(max_length=50)
     year_of_birth = models.IntegerField()
-    country_of_birth = CountryField()
+    country_of_birth = CountryField(default='DE')
 
     LEDIG = 'L'
     VERHEIRATET = 'V'
@@ -107,7 +107,8 @@ class Skill(models.Model):
     )
     level = models.CharField(max_length=1,
         choices=LEVEL_AUSWAHL,
-        default=BASIC)
+        default=BASIC,
+        help_text="Kenntnisstand ist bei Zertifikaten ohne Belang!")
     
     skill = models.CharField(max_length=200)
 
@@ -117,13 +118,16 @@ class Skill(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=1000)
     city = models.CharField(max_length=100)
-    country_iso_code = CountryField()
+    country_iso_code = CountryField(default='DE')
     position = models.CharField(max_length=100)
     work_start = models.DateField()
     work_end = models.DateField()
-    project_start = models.DateField()
-    project_end = models.DateField()
-    description = models.CharField(max_length=1000, blank=True, null=True)
+    project_start = models.DateField(blank=True, null=True)
+    project_end = models.DateField(blank=True, null=True)
+    description = models.CharField(max_length=1000,
+        blank=True,
+        null=True,
+        help_text="Bitte Beschreibung allgemein halten da diese auch fuer anonymisierte Lebenslaeufe verwendet werden!")
 
     # Foreign key
     customer = models.ForeignKey(Customer, blank=True, null=True)
