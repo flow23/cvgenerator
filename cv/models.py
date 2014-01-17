@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# print test.decode('utf-8')
+
 from django.db import models
 from django_countries import CountryField
 
@@ -44,7 +47,7 @@ class Employee(models.Model):
     SENIOR_CONSULTANT = 'SC'
     POSITION_AUSWAHL = (
        (CONSULTANT, 'Consultant'),
-       (MANAGING_DIRECTOR, 'Geschaeftsfuehrer'),
+       (MANAGING_DIRECTOR, 'Geschäftsführer'),
        (PROJECT_MANAGER, 'Projektleiter'),
        (SENIOR_CONSULTANT, 'Senior Consultant'),
     )
@@ -128,10 +131,10 @@ class Project(models.Model):
     work_end = models.DateField()
     project_start = models.DateField(blank=True, null=True)
     project_end = models.DateField(blank=True, null=True)
-    description = models.CharField(max_length=1000,
+    description = models.CharField(max_length=10000,
         blank=True,
         null=True,
-        help_text="Bitte Beschreibung allgemein halten da diese auch fuer anonymisierte Lebenslaeufe verwendet werden!")
+        help_text="Bitte Beschreibung allgemein halten da diese auch für anonymisierte Lebensläufe verwendet werden!")
 
     # Foreign key
     customer = models.ForeignKey(Customer, blank=True, null=True)
