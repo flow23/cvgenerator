@@ -39,9 +39,13 @@ class Employee(models.Model):
         default=LEDIG)
 
     CONSULTANT = 'CO'
+    MANAGING_DIRECTOR = 'MD'
+    PROJECT_MANAGER = 'PM'
     SENIOR_CONSULTANT = 'SC'
     POSITION_AUSWAHL = (
        (CONSULTANT, 'Consultant'),
+       (MANAGING_DIRECTOR, 'Geschaeftsfuehrer'),
+       (PROJECT_MANAGER, 'Projektleiter'),
        (SENIOR_CONSULTANT, 'Senior Consultant'),
     )
     position = models.CharField(max_length=2,
@@ -164,8 +168,8 @@ class Education(models.Model):
     study_start = models.DateField()
     study_end = models.DateField()
     degree = models.CharField(max_length=200)
-    degree_short = models.CharField(max_length=50)
-    thesis_topic = models.CharField(max_length=200)
+    degree_short = models.CharField(max_length=50, blank=True, null=True)
+    thesis_topic = models.CharField(max_length=200, blank=True, null=True)
 
     # Foreign key
     employee = models.ForeignKey(Employee, blank=True, null=True)
@@ -174,9 +178,11 @@ class Spoken_Language(models.Model):
     # Fields
     language = models.CharField(max_length=50)
 
+    GRUNDKENTISSE = 'GK'
     MUTTERSPRACHE = 'MS'
     VERHANDLUNGSSICHER = 'VS'
     KOENNEN_AUSWAHL = (
+        (GRUNDKENTISSE, 'Grundkenntnisse'),
         (MUTTERSPRACHE, 'Muttersprache'),
         (VERHANDLUNGSSICHER, 'Verhandlungssicher'),
         )
